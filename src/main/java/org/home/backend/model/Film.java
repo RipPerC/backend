@@ -1,6 +1,9 @@
 package org.home.backend.model;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
+
+import java.util.Date;
 
 @Entity
 @Table(name="FILM", schema = "DATA")
@@ -23,13 +26,17 @@ public class Film {
     private String format;
     @Column(name = "DOWNLOADED")
     private Boolean downloaded;
+    @CreationTimestamp
+    @Column(name = "CREATION_DATE")
+    @Temporal (TemporalType.TIMESTAMP)
+    private Date creationDate = new Date();
 
     public Film () {
         //Nothing
     }
 
     public Film (long id, String title, String director, Integer year, String audio, String subtitle, String format,
-                Boolean downloaded) {
+                Boolean downloaded, Date creationDate) {
         this.id = id;
         this.title = title;
         this.director = director;
@@ -38,6 +45,7 @@ public class Film {
         this.subtitle = subtitle;
         this.format = format;
         this.downloaded = downloaded;
+        this.creationDate = creationDate;
     }
 
     public Film (String title, String director, Integer year, String audio, String subtitle, String format, Boolean downloaded) {
@@ -114,6 +122,14 @@ public class Film {
         this.downloaded = downloaded;
     }
 
+    public Date getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(Date creationDate) {
+        this.creationDate = creationDate;
+    }
+
     @Override
     public String toString() {
         return "Film {" +
@@ -125,6 +141,7 @@ public class Film {
                 ", subtitle='" + subtitle + '\'' +
                 ", format='" + format + '\'' +
                 ", downloaded=" + downloaded +
+                ", creationDate=" + creationDate +
                 '}';
     }
 }
