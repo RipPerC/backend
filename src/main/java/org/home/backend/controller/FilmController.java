@@ -12,7 +12,7 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
-
+@CrossOrigin
 @RestController
 @RequestMapping("/v1")
 public class FilmController {
