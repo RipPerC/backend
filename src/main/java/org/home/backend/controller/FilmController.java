@@ -40,6 +40,7 @@ public class FilmController {
     public ResponseEntity<Film> getById(@PathVariable("id") long id) {
 
         try {
+
             Film film = filmService.getById(id);
 
             if (film == null) {
@@ -60,8 +61,6 @@ public class FilmController {
 
         try {
             filmService.createOrUpdateFilm(film);
-
-            System.out.println("Id: " + film.getId());
 
             if (newFilm) {
                 return new ResponseEntity<>(film, HttpStatus.CREATED);
@@ -94,7 +93,9 @@ public class FilmController {
     @DeleteMapping("/film/{id}")
     public ResponseEntity<HttpStatus> deleteFilm(@PathVariable("id") long id) {
         try {
+
             filmService.deleteFilm(id);
+
             return new ResponseEntity<>(HttpStatus.ACCEPTED);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
