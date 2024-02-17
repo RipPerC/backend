@@ -20,18 +20,17 @@ public class BookController {
     }
 
     @PostMapping("/book")
-    public ResponseEntity<Book> createBook(@RequestBody Book book) {
+    public ResponseEntity<Book> createOrUpdateBook(@RequestBody Book book) {
 
-        System.out.println(book);
+        boolean newBook = book.getId() == 0;
 
         try {
             Book _book = bookService.save(book);
 
-            if (book.getId() != 0) {
-                return new ResponseEntity<>(book, HttpStatus.ACCEPTED);
-            } else {
+            if (newBook) {
                 return new ResponseEntity<>(_book, HttpStatus.CREATED);
-
+            } else {
+                return new ResponseEntity<>(book, HttpStatus.ACCEPTED);
             }
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -45,8 +44,6 @@ public class BookController {
 
             List<Book> books = bookService.getAllBooks();
 
-            System.out.println(books);
-
             if (books.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
@@ -54,6 +51,21 @@ public class BookController {
             return new ResponseEntity<>(books, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @DeleteMapping("/book/{id}")
+    public ResponseEntity<HttpStatus> deleteBook(@PathVariable("id") long id) {
+        try {
+
+            if (bookService.deleteBook(id)) {
+                return new ResponseEntity<>(HttpStatus.ACCEPTED);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

@@ -21,6 +21,7 @@ public class BookService {
         this.sageRepository = sageRepository;
     }
 
+    //BOOKS
     public List<Book> getAllBooks() {
         return bookRepository.findAll();
     }
@@ -29,12 +30,28 @@ public class BookService {
         return bookRepository.save(book);
     }
 
+    public boolean deleteBook(long id) {
+
+        if (bookRepository.findById(id).isPresent()){
+            Book book = bookRepository.findById(id).get();
+
+            bookRepository.deleteById(id);
+
+            if (book.getSage() != null && bookRepository.howManyBookInASage(book.getSage().getId()) <= 1) {
+                deleteSage(book.getSage().getId());
+            }
+            return true;
+
+        } else {
+            return false;
+        }
+    }
+
     private boolean hasBooksWithSameSage(long sageId) {
         return bookRepository.howManyBookInASage(sageId) != 0;
     }
 
     // BOOK SAGES
-
     public void createOrUpdateSage(BookSage sage){
         sageRepository.save(sage);
     }

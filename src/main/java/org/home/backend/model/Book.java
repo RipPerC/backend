@@ -2,7 +2,6 @@ package org.home.backend.model;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.context.annotation.Lazy;
 
 @NoArgsConstructor
 @AllArgsConstructor
