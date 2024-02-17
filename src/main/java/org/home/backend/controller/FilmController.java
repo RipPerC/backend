@@ -72,6 +72,16 @@ public class FilmController {
         }
     }
 
+    @DeleteMapping("/film/{id}")
+    public ResponseEntity<HttpStatus> deleteFilm(@PathVariable("id") long id) {
+        try {
+            filmService.deleteFilm(id);
+            return new ResponseEntity<>(HttpStatus.ACCEPTED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     private void formattingFilm(Film film) {
         if(film.getDownloaded() == null) {
             film.setDownloaded(false);
@@ -90,16 +100,5 @@ public class FilmController {
         }
     }
 
-    @DeleteMapping("/film/{id}")
-    public ResponseEntity<HttpStatus> deleteFilm(@PathVariable("id") long id) {
-        try {
-
-            filmService.deleteFilm(id);
-
-            return new ResponseEntity<>(HttpStatus.ACCEPTED);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
 }
 
