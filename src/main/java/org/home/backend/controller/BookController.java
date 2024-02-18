@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @CrossOrigin
@@ -21,6 +22,10 @@ public class BookController {
 
     @PostMapping("/book")
     public ResponseEntity<Book> createOrUpdateBook(@RequestBody Book book) {
+
+        if (book.getCreationDate() == null) {
+            book.setCreationDate(new Date());
+        }
 
         boolean newBook = book.getId() == 0;
 
