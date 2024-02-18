@@ -54,7 +54,7 @@ public class FilmController {
     }
 
     @PostMapping("/film")
-    public ResponseEntity<Film> createFilm(@RequestBody Film film) {
+    public ResponseEntity<Film> createOrUpdateFilm(@RequestBody Film film) {
         formattingFilm(film);
 
         boolean newFilm = film.getId() == 0;
