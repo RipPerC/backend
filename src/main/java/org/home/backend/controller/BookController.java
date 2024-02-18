@@ -1,6 +1,7 @@
 package org.home.backend.controller;
 
 import org.home.backend.model.Book;
+import org.home.backend.model.BookDAO;
 import org.home.backend.service.BookService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,13 +22,11 @@ public class BookController {
     }
 
     @PostMapping("/book")
-    public ResponseEntity<Book> createOrUpdateBook(@RequestBody Book book) {
+    public ResponseEntity<Book> createOrUpdateBook(@RequestBody BookDAO bookDAO) {
 
-        if (book.getCreationDate() == null) {
-            book.setCreationDate(new Date());
-        }
+        boolean newBook = bookDAO.getId() == 0;
 
-        boolean newBook = book.getId() == 0;
+        Book book = new Book(bookDAO);
 
         try {
             Book _book = bookService.save(book);

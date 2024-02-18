@@ -20,4 +20,8 @@ public class BookSage {
     private long id;
     @Column(name = "NAME")
     private String name;
+
+    public BookSage (long id){
+        this.id = id;
+    }
 }

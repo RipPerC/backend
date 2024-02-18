@@ -44,4 +44,21 @@ public class Book {
         this.title = title;
     }
 
+    public Book(BookDAO bookDAO){
+        this.id = bookDAO.getId();
+        this.title = bookDAO.getTitle();
+        this.year = bookDAO.getYear();
+        this.author = bookDAO.getAuthor();
+        BookSage sageDAO = null;
+        if(bookDAO.getSage() != null) {
+            sageDAO = new BookSage(bookDAO.getSage());
+        }
+        this.sage = sageDAO;
+        this.orderSage = bookDAO.getOrderSage();
+        this.fileYear = bookDAO.getFileYear();
+        this.digital = bookDAO.getDigital();
+        this.notes = bookDAO.getNotes();
+        this.creationDate = (bookDAO.getCreationDate() != null)? bookDAO.getCreationDate(): new Date();
+    }
+
 }
