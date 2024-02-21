@@ -41,6 +41,23 @@ public class BookController {
         }
     }
 
+    @GetMapping("/book/{id}")
+    public ResponseEntity<Book> getById(@PathVariable("id") long id){
+        
+        try {
+
+            Book book = bookService.getBookById(id);
+
+            if (book == null) {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+
+            return new ResponseEntity<>(book, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @GetMapping("/book")
     public ResponseEntity<List<Book>> getAll() {
 
